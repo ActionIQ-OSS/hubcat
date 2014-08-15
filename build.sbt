@@ -4,7 +4,7 @@ import SonatypeKeys._
 sonatypeSettings
 
 //organization := "me.lessis"
-organization := "com.nitayjoffe.thirdparty.me.lessis"
+organization := "co.actioniq.thirdparty.me.lessis"
 
 name := "hubcat"
 
