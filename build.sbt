@@ -47,10 +47,6 @@ publishArtifact in Test := false
 
 publishMavenStyle := true
 
-seq(bintraySettings:_*)
-
-bintray.Keys.packageLabels in bintray.Keys.bintray := Seq("github", "gist")
-
 seq(lsSettings:_*)
 
 LsKeys.tags in LsKeys.lsync := Seq("github", "gist")
