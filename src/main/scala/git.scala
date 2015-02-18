@@ -1,6 +1,8 @@
 package hubcat
 
 import dispatch._
+import org.joda.time.DateTime
+import org.joda.time.format.{DateTimeFormat, DateTimeFormatter}
 
 // application/json
 //application/vnd.github.VERSION.raw
@@ -43,6 +45,30 @@ trait Git { self: RepoRequests =>
   // commits
   def commit(sha: String) =
     complete(apiHost / "repos" / user / repo / "git" / "commits" / sha)
+
+  /** https://developer.github.com/v3/repos/commits/#list-commits-on-a-repository */
+  def commits =
+    CommitsFilter(apiHost / "repos" / user / repo / "git" / "commits")
+
+  protected[this]
+  case class CommitsFilter(base: Req,
+                           _sha: Option[String] = None,
+                           _path: Option[String] = None,
+                           _author: Option[String] = None,
+                           _since: Option[DateTime] = None,
+                           _until: Option[DateTime] = None) extends Client.Completion {
+    val dateTimeFormat = DateTimeFormat.forPattern("YYYY-MM-DDTHH:MM:SSZ")
+
+    override def apply[T](handler: Client.Handler[T]) = {
+      val params = Map() ++
+        _sha.map("sha" -> _) ++
+        _path.map("path" -> _) ++
+        _author.map("author" -> _) ++
+        _since.map(s => "since" -> dateTimeFormat.print(s)) ++
+        _until.map(u => "until" -> dateTimeFormat.print(u))
+      request(base <<? params)(handler)
+    }
+  }
 
   // http://developer.github.com/v3/git/commits/#create-a-commit
 
