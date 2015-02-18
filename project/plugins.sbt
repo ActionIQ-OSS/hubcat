@@ -9,6 +9,6 @@ addSbtPlugin("me.lessis" % "ls-sbt" % "0.1.3")
 
 addSbtPlugin("com.eed3si9n" % "sbt-buildinfo" % "0.2.5")
 
-addSbtPlugin("org.xerial.sbt" % "sbt-sonatype" % "0.2.1")
+addSbtPlugin("org.xerial.sbt" % "sbt-sonatype" % "0.2.2")
 
-addSbtPlugin("com.jsuereth" % "sbt-pgp" % "1.0.0")
+addSbtPlugin("com.typesafe.sbt" % "sbt-pgp" % "0.8.3")
