@@ -1,8 +1,14 @@
-organization := "me.lessis"
+import SonatypeKeys._
+
+// Import default settings. This changes `publishTo` settings to use the Sonatype repository and add several commands for publishing.
+sonatypeSettings
+
+//organization := "me.lessis"
+organization := "co.actioniq.thirdparty.me.lessis"
 
 name := "hubcat"
 
-version := "0.2.0-SNAPSHOT"
+version := "0.2.0-f74173eb"
 
 description := "a vvip client of the github enterprises"
 
@@ -57,3 +63,23 @@ sourceGenerators in Compile <+= buildInfo
 buildInfoKeys := Seq[BuildInfoKey](version)
 
 buildInfoPackage := "hubcat"
+
+publishTo := {
+  val nexus = "https://oss.sonatype.org/"
+  if (version.value.trim.endsWith("SNAPSHOT"))
+    Some("snapshots" at nexus + "content/repositories/snapshots")
+  else
+    Some("releases"  at nexus + "service/local/staging/deploy/maven2")
+}
+
+pomExtra := {
+  <scm>
+    <connection>scm:git:github.com/softprops/hubcat</connection>
+    <developerConnection>scm:git:git@github.com:softprops/hubcat.git</developerConnection>
+    <url>github.com/softprops/hubcat</url>
+  </scm>
+  <developers>
+    <developer>
+    </developer>
+  </developers>
+}
