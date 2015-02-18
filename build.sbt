@@ -8,7 +8,7 @@ organization := "co.actioniq.thirdparty.me.lessis"
 
 name := "hubcat"
 
-version := "0.2.0-c0ab8ec9daa4a9aaed7d0346928af4d8bf7a370f"
+version := "0.2.0-876bf3161ae894f0602fe867124cacaa240de5de"
 
 description := "a vvip client of the github enterprises"
 
