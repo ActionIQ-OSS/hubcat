@@ -46,10 +46,6 @@ trait Git { self: RepoRequests =>
   def commit(sha: String) =
     complete(apiHost / "repos" / user / repo / "git" / "commits" / sha)
 
-  /** https://developer.github.com/v3/repos/commits/#list-commits-on-a-repository */
-  def commits =
-    CommitsFilter(apiHost / "repos" / user / repo / "git" / "commits")
-
   protected[this]
   case class CommitsFilter(base: Req,
                            _sha: Option[String] = None,
@@ -59,7 +55,13 @@ trait Git { self: RepoRequests =>
                            _until: Option[DateTime] = None) extends Client.Completion {
     val dateTimeFormat = DateTimeFormat.forPattern("YYYY-MM-DDTHH:MM:SSZ")
 
-    override def apply[T](handler: Client.Handler[T]) = {
+    def sha(s: String): CommitsFilter = copy(_sha = Some(s))
+    def path(p: String): CommitsFilter = copy(_path = Some(p))
+    def author(a: String): CommitsFilter = copy(_author = Some(a))
+    def since(s: DateTime): CommitsFilter = copy(_since = Some(s))
+    def until(u: DateTime): CommitsFilter = copy(_until = Some(u))
+
+    override def apply[T](handler: Client.Handler[T]): Future[T] = {
       val params = Map() ++
         _sha.map("sha" -> _) ++
         _path.map("path" -> _) ++
@@ -69,6 +71,10 @@ trait Git { self: RepoRequests =>
       request(base <<? params)(handler)
     }
   }
+
+  /** https://developer.github.com/v3/repos/commits/#list-commits-on-a-repository */
+  def commits =
+    CommitsFilter(apiHost / "repos" / user / repo / "git" / "commits")
 
   // http://developer.github.com/v3/git/commits/#create-a-commit
 
