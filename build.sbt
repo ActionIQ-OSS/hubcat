@@ -12,10 +12,9 @@ version := "0.2.0-77683425bdba6c3666ffc357384961ad12729eef"
 
 description := "a vvip client of the github enterprises"
 
-libraryDependencies ++= Seq(
-  "com.github.nscala-time" %% "nscala-time" % "1.8.0",
-  "net.databinder.dispatch" %% "dispatch-json4s-native" % "0.11.0",
-  "org.scalatest" %% "scalatest" % "1.9.1" % "test")
+libraryDependencies ++= Seq("net.databinder.dispatch" %% "dispatch-json4s-native" % "0.11.0")
+
+libraryDependencies += "org.scalatest" %% "scalatest" % "1.9.1" % "test"
 
 // needed for java test options
 fork in Test := true
